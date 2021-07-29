@@ -21,11 +21,22 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('refactoring-v2');
   });
-
-  it('should render title', () => {
+  it(`should have as title 'refactoring-v2'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('refactoring-v2 app is running!');
-  });
+    const app = fixture.componentInstance;
+    app.ngOnInit()
+    expect(app.result.trim()).toEqual(`
+        청구 내역 (고객명: BigCo)
+      Hamlet: $650.00 (55석)
+      As You Like It: $580.00 (35석)
+      Othello: $500.00 (40석)
+    총액: $1,730.00
+    적립 포인트: 40점`.trim())});
+
+  // it('should render title', () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   fixture.detectChanges();
+  //   const compiled = fixture.nativeElement as HTMLElement;
+  //   expect(compiled.querySelector('.content span')?.textContent).toContain('refactoring-v2 app is running!');
+  // });
 });

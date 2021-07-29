@@ -1,27 +1,8 @@
-# RefactoringV2
+# RefactoringV2 by Martin Fowler
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
+다양한 연극을 위주로 받아서 공연하는 극단이 있다.
 
-## Development server
+연극의 장르와 관객 규모를 기초로 비용을 책정한다.
+현재는 비극(tragedy)과 희극(comedy)만 공연한다.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+공연료와 별개로 포인트를 지급해서 다음번 의뢰 시 공연료를 할인 받을 수 있다.
