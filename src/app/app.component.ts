@@ -22,14 +22,17 @@ export class AppComponent implements OnInit {
   }
 
   statement(invoice: any, plays: any): string {
-    const statementData = {}; // 중간 데이터 구조를 인수로 전달
-    return this.renderPlainText(statementData, invoice, plays);
+    const statementData = {
+      customer: invoice.customer,
+      performances: invoice.performances
+    }; // 중간데이터로 공연정보 옮기기
+    return this.renderPlainText(statementData, plays);
   }
 
-  private renderPlainText(data: any, invoice: any, plays: any) {
-    let result = `청구 내역 (고객명: ${invoice.customer})\n`;
+  private renderPlainText(data: any, plays: any) { // 필요 없어진 파라미터(invoice) 삭제
+    let result = `청구 내역 (고객명: ${data.customer})\n`;
 
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
     }
     result += `\n총액: ${usd(totalAmount())}\n`
@@ -38,7 +41,7 @@ export class AppComponent implements OnInit {
 
     function totalAmount() {
       let result = 0;
-      for (let perf of invoice.performances) {
+      for (let perf of data.performances) {
         result += amountFor(perf);
       }
       return result;
@@ -46,7 +49,7 @@ export class AppComponent implements OnInit {
 
     function totalVolumeCredits() {
       let result = 0;
-      for (let perf of invoice.performances) {
+      for (let perf of data.performances) {
         result += volumeCreditsFor(perf);
       }
       return result;
