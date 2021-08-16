@@ -32,17 +32,17 @@ export class AppComponent implements OnInit {
       volumeCredits += volumeCreditsFor(perf);
 
       // 청구 내역을 출력한다.
-      result += `${playFor(perf).name}: ${usd(amountFor(perf)/100)} (${perf.audience}석)\n`;
+      result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
       totalAmount += amountFor(perf);
     }
-    result += `\n총액: ${usd(totalAmount/100)}\n`
+    result += `\n총액: ${usd(totalAmount)}\n`
     result += `적립 포인트: ${volumeCredits}점`;
 
     return result;
 
     // 함수 변수(format)를 일반 함수(usd-함수이름변경)로 변경
     function usd(aNumber: any) {
-      return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber);
+      return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber/100);
     }
 
     // 포인트를 적립한다.

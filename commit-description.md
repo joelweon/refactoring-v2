@@ -11,8 +11,12 @@
 성능 큰영향x, 리팩터링된 코드는 성능 개선이 훨씬 쉬워짐  
 => 추출 작업 전 지역변수를 먼저 없앰. - 신경써야할 유효범위가 줄음
 
+---
+
 ### 적립 포인트 계산 코드 추출하기
 `volumeCreditsFor()` 새로 추출한 함수
+
+---
 
 ### format 변수 제거하기
 임시변수는 나중에 문제를 일으킬 수 있다.  
@@ -29,7 +33,8 @@ const format = new Intl.NumberFormat("en-US", {style: "currency", currency:"USD"
 일반 함수
 ```javascript
 function format(aNumber: any) {
-  return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber);
+  return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber/100);
 }
 ```
 + 함수 이름 바꾸기 `format() -> usd()`
++ 단위 변환 로직(`/100`)도 `format()` 함수 안으로 이동
