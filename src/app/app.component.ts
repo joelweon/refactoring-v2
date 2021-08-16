@@ -22,10 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   statement(invoice: any, plays: any): string {
-    return this.renderPlainText(invoice, plays); // 본문 전체를 별도 함수로 추출
+    const statementData = {}; // 중간 데이터 구조를 인수로 전달
+    return this.renderPlainText(statementData, invoice, plays);
   }
 
-  private renderPlainText(invoice: any, plays: any) {
+  private renderPlainText(data: any, invoice: any, plays: any) {
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
     for (let perf of invoice.performances) {
