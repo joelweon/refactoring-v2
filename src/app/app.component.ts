@@ -30,19 +30,25 @@ export class AppComponent implements OnInit {
 
     for (let perf of invoice.performances) {
 
-      // 포인트를 적립한다.
-      volumeCredits += Math.max(perf.audience - 30, 0);
-      // 희극 관객 5명마다 추가 포인트를 제공한다.
-      if ("commedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
+      volumeCredits += volumeCreditsFor(perf); // 함수 추출 후 값을 누적
 
       // 청구 내역을 출력한다.
       result += `${playFor(perf).name}: ${format(amountFor(perf)/100)} (${perf.audience}석)\n`;
       totalAmount += amountFor(perf);
     }
     result += `\n총액: ${format(totalAmount/100)}\n`
-    result += `적립 포인트: ${volumeCredits}점`
-    ;
+    result += `적립 포인트: ${volumeCredits}점`;
+
     return result;
+
+    // 포인트를 적립한다.
+    function volumeCreditsFor(aPerformance: any) { // 명시적 변수로 변환 (perf -> aPerformance)
+      let result = 0; // 명시적 변수로 변환 (volumeCredits -> result)
+      result += Math.max(aPerformance.audience - 30, 0);
+      if ("commedy" === playFor(aPerformance).type)
+        result += Math.floor(aPerformance.audience / 5);
+      return result;
+    }
 
     // 공연별 요금계산
     function amountFor(aPerformance: any) { // 값이 바뀌지 않는 변수는 매개변수로 전달
