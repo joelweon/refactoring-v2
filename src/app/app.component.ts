@@ -23,27 +23,29 @@ export class AppComponent implements OnInit {
 
   // 공연료 청구서를 출력하는 코드
   statement(invoice: any, plays: any): string {
-    let totalAmount = 0;
     let result =`청구 내역 (고객명: ${invoice.customer})\n`;
 
     for (let perf of invoice.performances) {
-
-      // 청구 내역을 출력한다.
       result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
-      totalAmount += amountFor(perf);
     }
-
-    result += `\n총액: ${usd(totalAmount)}\n`
+    result += `\n총액: ${usd(totalAmount())}\n`
     result += `적립 포인트: ${totalVolumeCredits()}점`;
-
     return result;
 
-    function totalVolumeCredits() {
-      let volumeCredits = 0;
+    function totalAmount() {
+      let result = 0;
       for (let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf);
+        result += amountFor(perf);
       }
-      return volumeCredits;
+      return result;
+    }
+
+    function totalVolumeCredits() {
+      let result = 0;
+      for (let perf of invoice.performances) {
+        result += volumeCreditsFor(perf);
+      }
+      return result;
     }
 
     // 함수 변수(format)를 일반 함수(usd-함수이름변경)로 변경

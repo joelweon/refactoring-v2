@@ -157,3 +157,7 @@ function totalVolumeCredits() {
 ```
 
 항상 단계를 이처럼 나누는 것은 아니지만 상황이 복잡하다면 단계를 더 작게 나누는 일을 가장 먼저 한다.
+
+---
+
+`totalAmount` 임시변수도 `volumeCredits` 동일하게 4단계를 진행한다.
