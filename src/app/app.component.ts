@@ -26,24 +26,28 @@ export class AppComponent implements OnInit {
     let totalAmount = 0;
     let volumeCredits = 0;
     let result =`청구 내역 (고객명: ${invoice.customer})\n`;
-    const format = new Intl.NumberFormat("en-US", {style: "currency", currency:"USD", minimumFractionDigits: 2}).format;
 
     for (let perf of invoice.performances) {
 
-      volumeCredits += volumeCreditsFor(perf); // 함수 추출 후 값을 누적
+      volumeCredits += volumeCreditsFor(perf);
 
       // 청구 내역을 출력한다.
-      result += `${playFor(perf).name}: ${format(amountFor(perf)/100)} (${perf.audience}석)\n`;
+      result += `${playFor(perf).name}: ${usd(amountFor(perf)/100)} (${perf.audience}석)\n`;
       totalAmount += amountFor(perf);
     }
-    result += `\n총액: ${format(totalAmount/100)}\n`
+    result += `\n총액: ${usd(totalAmount/100)}\n`
     result += `적립 포인트: ${volumeCredits}점`;
 
     return result;
 
+    // 함수 변수(format)를 일반 함수(usd-함수이름변경)로 변경
+    function usd(aNumber: any) {
+      return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber);
+    }
+
     // 포인트를 적립한다.
-    function volumeCreditsFor(aPerformance: any) { // 명시적 변수로 변환 (perf -> aPerformance)
-      let result = 0; // 명시적 변수로 변환 (volumeCredits -> result)
+    function volumeCreditsFor(aPerformance: any) {
+      let result = 0;
       result += Math.max(aPerformance.audience - 30, 0);
       if ("commedy" === playFor(aPerformance).type)
         result += Math.floor(aPerformance.audience / 5);
@@ -51,8 +55,8 @@ export class AppComponent implements OnInit {
     }
 
     // 공연별 요금계산
-    function amountFor(aPerformance: any) { // 값이 바뀌지 않는 변수는 매개변수로 전달
-      let result = 0; // 명확한 이름으로 변경 (thisAmount -> result)
+    function amountFor(aPerformance: any) {
+      let result = 0;
 
       switch (playFor(aPerformance).type) {
         case "tragedy": // 비극
