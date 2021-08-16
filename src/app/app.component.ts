@@ -21,9 +21,12 @@ export class AppComponent implements OnInit {
     this.result = this.statement(this.invoice, this.plays);
   }
 
-  // 공연료 청구서를 출력하는 코드
   statement(invoice: any, plays: any): string {
-    let result =`청구 내역 (고객명: ${invoice.customer})\n`;
+    return this.renderPlainText(invoice, plays); // 본문 전체를 별도 함수로 추출
+  }
+
+  private renderPlainText(invoice: any, plays: any) {
+    let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
     for (let perf of invoice.performances) {
       result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
@@ -50,7 +53,11 @@ export class AppComponent implements OnInit {
 
     // 함수 변수(format)를 일반 함수(usd-함수이름변경)로 변경
     function usd(aNumber: any) {
-      return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(aNumber/100);
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2
+      }).format(aNumber / 100);
     }
 
     // 포인트를 적립한다.
